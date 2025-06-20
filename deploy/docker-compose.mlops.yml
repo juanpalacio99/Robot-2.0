@@ -1,0 +1,22 @@
+services:
+  mlflow:
+    image: mlflow:latest
+    command: mlflow server --host 0.0.0.0 --port 5000 \
+                           --backend-store-uri sqlite:///mlflow.db \
+                           --default-artifact-root ./artifacts
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlops/artifacts:/app/artifacts
+
+  mlops:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark  # o Dockerfile.mlops
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    depends_on:
+      - mlflow
+    volumes:
+      - .:/app
+    command: ["pytest", "tests/test_mlops.py"]

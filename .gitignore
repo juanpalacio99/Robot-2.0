@@ -1,0 +1,19 @@
+# entorno
+.venv/
+
+# caches de Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# artefactos de MLflow
+mlruns/
+mlops/artifacts/
+
+# PDFs temporales, rutas, ficheros de sistema…
+desktop.ini
+Rutas.txt
+Fases&Desarrollo/
+
+# logs, etc.
+*.log

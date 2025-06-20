@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: mlops-pipeline-
+spec:
+  entrypoint: mlops-steps
+  templates:
+  - name: mlops-steps
+    steps:
+    - - name: preprocess
+        template: run-step
+        arguments:
+          parameters: [{name: step, value: preprocess}]
+    - - name: train
+        template: run-step
+        arguments:
+          parameters: [{name: step, value: train}]
+    - - name: evaluate
+        template: run-step
+        arguments:
+          parameters: [{name: step, value: evaluate}]
+    - - name: register
+        template: run-step
+        arguments:
+          parameters: [{name: step, value: register}]
+
+  - name: run-step
+    inputs:
+      parameters:
+      - name: step
+    container:
+      image: robot20-spark:3.5.6
+      command: ["python", "/app/mlops/mlflow_tracking.py", "{{inputs.parameters.step}}"]
+      env:
+      - name: MLFLOW_TRACKING_URI
+        value: "http://mlflow:5000"

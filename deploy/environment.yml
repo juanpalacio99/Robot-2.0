@@ -1,0 +1,21 @@
+name: spark-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - openjdk=17          # si tu pipeline necesita Java
+  - pyspark=3.5.6
+  - redis-py=4.5.5
+  - numpy
+  - pandas
+  - pyarrow
+  - scikit-learn
+  - joblib
+  - pytest
+  - mlflow
+  - wandb
+  - great_expectations=0.15.47
+  - evidently=0.2.2
+  - alibi-detect=0.11.4
+  - pip                  # para cualquier cosilla residual
+

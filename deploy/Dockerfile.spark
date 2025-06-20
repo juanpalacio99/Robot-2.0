@@ -1,0 +1,39 @@
+# — builder multi‐stage con micromamba —
+FROM mambaorg/micromamba:1.5.0 AS builder
+
+# contexto=deploy/, así que environment.yml está en “.”
+COPY environment.yml /tmp/environment.yml
+
+# creamos el env completo y limpiamos caches
+RUN micromamba create -y \
+      -f /tmp/environment.yml \
+      -p /opt/conda/envs/spark-env \
+    && micromamba clean --all --yes
+
+# — runtime —
+FROM python:3.10-slim
+
+# traemos el env de conda
+COPY --from=builder /opt/conda/envs/spark-env /opt/conda/envs/spark-env
+
+# aseguramos que usemos ese Python
+ENV PATH=/opt/conda/envs/spark-env/bin:$PATH
+WORKDIR /app
+
+# copiamos el código
+COPY . /app
+
+# comando por defecto (ajústalo a lo que necesites)
+CMD ["pytest", "--maxfail=1", "--disable-warnings", "-q"]
+
+
+
+
+
+
+
+
+
+
+
+
