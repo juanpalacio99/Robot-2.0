@@ -1,21 +1,45 @@
-name: spark-env
+name: robot2.0
 channels:
   - conda-forge
 dependencies:
   - python=3.10
-  - openjdk=17          # si tu pipeline necesita Java
-  - pyspark=3.5.6
-  - redis-py=4.5.5
-  - numpy
-  - pandas
+  - pip
+  - pyspark=3.3.2
+  - delta-spark=2.1.0
+  - apache-iceberg=1.2.0
+  - confluent-kafka=2.0.2
+  - boto3=1.26.0
+  - feast=0.23.1
+  - redis=6.2.6
+  - great-expectations=0.16.16
+  - evidently=0.2.3
+  - alibi-detect=1.17.0
+  - prefect=2.7.5
+  - mlflow=2.6.2
+  - wandb=0.16.10
+  - numpy=1.24.3
+  - pandas=2.0.1
   - pyarrow
   - scikit-learn
   - joblib
-  - pytest
-  - mlflow
-  - wandb
-  - great_expectations=0.15.47
-  - evidently=0.2.2
-  - alibi-detect=0.11.4
-  - pip                  # para cualquier cosilla residual
+  - tensorflow=2.12.0
+  - tf-agents=0.15.0
+  - stable-baselines3=1.7.0
+  - pytorch=2.0.1
+  - shap=0.41.0
+  - optuna=3.1.0
+  - ray=2.6.0        # ray[tune] se instalará vía pip
+  - pip:
+    - ray[tune]==2.6.0
+    - torch-geometric==2.3.0
+    - transformers==4.29.2
+    - fastapi==0.98.0
+    - uvicorn==0.23.1
+    - grpcio==1.58.0
+    - authlib==1.2.1
+    - kafka-python
+    - requests
+    - joblib
+    - pytest
+
 
