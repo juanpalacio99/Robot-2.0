@@ -1,16 +1,17 @@
-version: '3.8'
+version: "3.9"
 services:
-  spark:
-    build:
-      context: .
-      dockerfile: Dockerfile.spark
+  spark-master:
+    image: bitnami/spark:3.3.2
+    environment:
+      - SPARK_MODE=master
+  spark-worker:
+    image: bitnami/spark:3.3.2
     depends_on:
-      - redis
-    # ajusta puertos/volúmenes según necesites
-  redis:
-    image: redis:6.2.18
-    ports:
-      - "6379:6379"
+      - spark-master
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+
 
 
 
