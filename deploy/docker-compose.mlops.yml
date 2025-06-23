@@ -1,22 +1,46 @@
+version: "3.9"
+
 services:
   mlflow:
-    image: mlflow:latest
-    command: mlflow server --host 0.0.0.0 --port 5000 \
-                           --backend-store-uri sqlite:///mlflow.db \
-                           --default-artifact-root ./artifacts
+    image: mlfloworg/mlflow:2.6.2
+    command: server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 --port 5000
+    volumes:
+      - ./mlflow:/mlflow
     ports:
       - "5000:5000"
-    volumes:
-      - ./mlops/artifacts:/app/artifacts
+    healthcheck:
+      test: ["CMD", "curl -f http://localhost:5000/health"]
+      interval: 15s
+      retries: 3
 
-  mlops:
-    build:
-      context: .
-      dockerfile: Dockerfile.spark  # o Dockerfile.mlops
+  prefect:
+    image: prefecthq/prefect:2.7.5
+    command: prefect orion start --host 0.0.0.0 --port 4200
+    ports:
+      - "4200:4200"
+    healthcheck:
+      test: ["CMD", "curl -f http://localhost:4200/"]
+      interval: 15s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana:9.5.2
     environment:
-      MLFLOW_TRACKING_URI: http://mlflow:5000
-    depends_on:
-      - mlflow
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    ports:
+      - "3000:3000"
     volumes:
-      - .:/app
-    command: ["pytest", "tests/test_mlops.py"]
+      - grafana-storage:/var/lib/grafana
+    healthcheck:
+      test: ["CMD", "curl -f http://localhost:3000/api/health"]
+      interval: 15s
+      retries: 3
+
+volumes:
+  grafana-storage:
+
+networks:
+  default:
+    external:
+      name: robot2_network
+
