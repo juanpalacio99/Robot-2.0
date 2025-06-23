@@ -2,7 +2,7 @@ pyspark==3.3.2
 delta-spark==2.1.0
 confluent-kafka==2.0.2
 boto3==1.26.0
-redis==6.2.6
+redis==6.2.0
 great-expectations==0.16.16
 evidently==0.2.3
 alibi-detect==1.17.0
