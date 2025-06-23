@@ -1,6 +1,5 @@
 pyspark==3.3.2
 delta-spark==2.1.0
-apache-iceberg==1.2.0
 confluent-kafka==2.0.2
 boto3==1.26.0
 feast==0.23.1
