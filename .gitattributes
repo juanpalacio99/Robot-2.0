@@ -21,3 +21,4 @@ deploy/vendor/Authlib-1.2.1-py2.py3-none-any.whl filter=lfs diff=lfs merge=lfs -
 deploy/vendor/PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl filter=lfs diff=lfs merge=lfs -text
 deploy/vendor/PyYAML-6.0.2-*.whl filter=lfs diff=lfs merge=lfs -text
 deploy/vendor/statsmodels-*.whl filter=lfs diff=lfs merge=lfs -text
+deploy/vendor/nltk-3.8.1-py3-none-any.whl filter=lfs diff=lfs merge=lfs -text
