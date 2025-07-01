@@ -1,4 +1,4 @@
-PyYAML==6.0.2
+PyYAML>=5.1,<6.0
 pyspark==3.3.2
 delta-spark==2.1.0
 confluent-kafka==2.0.2
